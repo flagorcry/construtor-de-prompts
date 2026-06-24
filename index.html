@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Construtor de Prompts de Excelência</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">✦</span>
+      <h1>Construtor de Prompts</h1>
+    </div>
+    <div class="presets">
+      <span class="presets-label">Preset:</span>
+      <button class="preset-btn" data-preset="programacao">💻 Programação</button>
+      <button class="preset-btn" data-preset="dados">📊 Análise/Dados</button>
+      <button class="preset-btn ghost" data-preset="limpar">Limpar tudo</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- Coluna do editor -->
+    <section class="editor" id="editor" aria-label="Blocos do prompt">
+      <!-- Blocos injetados via app.js -->
+    </section>
+
+    <!-- Coluna de preview / ferramentas -->
+    <aside class="sidebar">
+      <div class="card score-card">
+        <div class="score-head">
+          <h2>Qualidade</h2>
+          <span class="score-value" id="scoreValue">0</span>
+        </div>
+        <div class="score-bar"><div class="score-fill" id="scoreFill"></div></div>
+        <ul class="tips" id="tips"></ul>
+      </div>
+
+      <div class="card preview-card">
+        <div class="preview-head">
+          <h2>Preview do prompt</h2>
+          <div class="preview-actions">
+            <button id="copyBtn" class="primary">Copiar</button>
+          </div>
+        </div>
+        <pre class="preview" id="preview" aria-live="polite"></pre>
+      </div>
+
+      <div class="card templates-card">
+        <h2>Meus templates</h2>
+        <div class="template-save">
+          <input type="text" id="templateName" placeholder="Nome do template" />
+          <button id="saveBtn" class="primary">Salvar</button>
+        </div>
+        <ul class="template-list" id="templateList"></ul>
+        <div class="template-io">
+          <button id="exportBtn" class="ghost">Exportar JSON</button>
+          <button id="importBtn" class="ghost">Importar JSON</button>
+          <input type="file" id="importFile" accept="application/json" hidden />
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

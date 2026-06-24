@@ -125,17 +125,27 @@ function renderBlocks() {
     wrap.className = "block" + (state[b.key].enabled ? "" : " disabled");
     wrap.dataset.key = b.key;
 
+    // Estrutura estática via innerHTML (apenas constantes de BLOCKS, sem dados do usuário).
     wrap.innerHTML = `
       <div class="block-head">
-        <div class="block-title"><span class="emoji">${b.emoji}</span>${b.title}</div>
+        <div class="block-title"><span class="emoji"></span><span class="t"></span></div>
         <label class="switch" title="Incluir este bloco no prompt">
           <input type="checkbox" ${state[b.key].enabled ? "checked" : ""} data-toggle="${b.key}">
           <span class="slider"></span>
         </label>
       </div>
-      <p class="block-help">${b.help}</p>
-      <textarea data-input="${b.key}" placeholder="${escapeAttr(b.placeholder)}">${state[b.key].text}</textarea>
+      <p class="block-help"></p>
+      <textarea data-input="${b.key}"></textarea>
     `;
+
+    // Dados (incluindo conteúdo do usuário) atribuídos por propriedade — nunca interpretados como HTML.
+    wrap.querySelector(".emoji").textContent = b.emoji;
+    wrap.querySelector(".block-title .t").textContent = b.title;
+    wrap.querySelector(".block-help").textContent = b.help;
+    const ta = wrap.querySelector("textarea");
+    ta.placeholder = b.placeholder;
+    ta.value = state[b.key].text;
+
     editor.appendChild(wrap);
   });
 
@@ -364,16 +374,19 @@ function importTemplates(file) {
       const imported = JSON.parse(reader.result);
       if (!Array.isArray(imported)) throw new Error("formato inválido");
       const current = loadTemplates();
-      // Mescla por nome (importado sobrescreve)
-      imported.forEach((tpl) => {
-        if (!tpl.name || !tpl.state) return;
+      let count = 0;
+      // Mescla por nome (importado sobrescreve), normalizando cada entrada.
+      imported.forEach((raw) => {
+        const tpl = sanitizeTemplate(raw);
+        if (!tpl) return;
         const idx = current.findIndex((t) => t.name === tpl.name);
         if (idx >= 0) current[idx] = tpl;
         else current.push(tpl);
+        count++;
       });
       persistTemplates(current);
       renderTemplates();
-      toast(`${imported.length} template(s) importado(s).`);
+      toast(`${count} template(s) importado(s).`);
     } catch {
       toast("Arquivo JSON inválido.");
     }
@@ -384,8 +397,28 @@ function importTemplates(file) {
 /* -------------------------------------------------------------------------
    Utilitários
    ------------------------------------------------------------------------- */
-function escapeAttr(str) {
-  return str.replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+/* Normaliza um template importado para o formato conhecido, descartando
+   campos inesperados e coagindo tipos. Retorna null se for inválido. */
+function sanitizeTemplate(tpl) {
+  if (!tpl || typeof tpl !== "object") return null;
+  if (typeof tpl.name !== "string" || !tpl.name.trim()) return null;
+  if (!tpl.state || typeof tpl.state !== "object") return null;
+
+  const cleanState = {};
+  BLOCKS.forEach((b) => {
+    const raw = tpl.state[b.key];
+    cleanState[b.key] = {
+      text: typeof raw?.text === "string" ? raw.text : "",
+      enabled: typeof raw?.enabled === "boolean" ? raw.enabled : b.key !== "exemplos",
+    };
+  });
+
+  return {
+    name: tpl.name.trim().slice(0, 120),
+    state: cleanState,
+    savedAt: typeof tpl.savedAt === "number" ? tpl.savedAt : Date.now(),
+  };
 }
 
 let toastTimer;

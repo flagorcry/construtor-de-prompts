@@ -1,0 +1,6 @@
+# Backups de templates exportados pelo app
+prompt-templates.json
+
+# Sistema operacional
+Thumbs.db
+.DS_Store

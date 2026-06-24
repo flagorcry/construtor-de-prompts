@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Construtor de Prompts de Excelência</title>
+  <meta name="description" content="Ferramenta gratuita para criar prompts de IA de excelência: construtor por blocos, biblioteca de modelos prontos e guia de técnicas." />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -12,56 +13,89 @@
       <span class="logo">✦</span>
       <h1>Construtor de Prompts</h1>
     </div>
-    <div class="presets">
-      <span class="presets-label">Preset:</span>
-      <button class="preset-btn" data-preset="programacao">💻 Programação</button>
-      <button class="preset-btn" data-preset="dados">📊 Análise/Dados</button>
-      <button class="preset-btn ghost" data-preset="limpar">Limpar tudo</button>
-    </div>
+    <nav class="tabs" id="tabs">
+      <button class="tab-btn active" data-tab="construtor">🔧 Construtor</button>
+      <button class="tab-btn" data-tab="modelos">📚 Modelos</button>
+      <button class="tab-btn" data-tab="tecnicas">🎓 Técnicas</button>
+    </nav>
   </header>
 
-  <main class="layout">
-    <!-- Coluna do editor -->
-    <section class="editor" id="editor" aria-label="Blocos do prompt">
-      <!-- Blocos injetados via app.js -->
+  <main>
+    <!-- ============ ABA: CONSTRUTOR ============ -->
+    <section class="tab-panel active" id="tab-construtor">
+      <div class="builder-toolbar">
+        <span class="presets-label">Começar com um preset:</span>
+        <button class="preset-btn" data-preset="programacao">💻 Programação</button>
+        <button class="preset-btn" data-preset="dados">📊 Análise/Dados</button>
+        <button class="preset-btn" data-preset="escrita">✍️ Escrita</button>
+        <button class="preset-btn ghost" data-preset="limpar">Limpar tudo</button>
+      </div>
+
+      <div class="layout">
+        <section class="editor" id="editor" aria-label="Blocos do prompt"></section>
+
+        <aside class="sidebar">
+          <div class="card score-card">
+            <div class="score-head">
+              <h2>Qualidade</h2>
+              <span class="score-value" id="scoreValue">0</span>
+            </div>
+            <div class="score-bar"><div class="score-fill" id="scoreFill"></div></div>
+            <ul class="tips" id="tips"></ul>
+          </div>
+
+          <div class="card preview-card">
+            <div class="preview-head">
+              <h2>Preview do prompt</h2>
+              <button id="copyBtn" class="primary">Copiar</button>
+            </div>
+            <pre class="preview" id="preview" aria-live="polite"></pre>
+          </div>
+
+          <div class="card templates-card">
+            <h2>Meus templates</h2>
+            <div class="template-save">
+              <input type="text" id="templateName" placeholder="Nome do template" />
+              <button id="saveBtn" class="primary">Salvar</button>
+            </div>
+            <ul class="template-list" id="templateList"></ul>
+            <div class="template-io">
+              <button id="exportBtn" class="ghost">Exportar JSON</button>
+              <button id="importBtn" class="ghost">Importar JSON</button>
+              <input type="file" id="importFile" accept="application/json" hidden />
+            </div>
+          </div>
+        </aside>
+      </div>
     </section>
 
-    <!-- Coluna de preview / ferramentas -->
-    <aside class="sidebar">
-      <div class="card score-card">
-        <div class="score-head">
-          <h2>Qualidade</h2>
-          <span class="score-value" id="scoreValue">0</span>
+    <!-- ============ ABA: MODELOS ============ -->
+    <section class="tab-panel" id="tab-modelos">
+      <div class="panel-intro">
+        <h2>📚 Biblioteca de Modelos</h2>
+        <p>Prompts prontos e testados para os casos mais comuns. Clique em <strong>Usar no construtor</strong> para editar, ou <strong>Copiar</strong> para usar direto na sua IA.</p>
+        <div class="models-controls">
+          <input type="text" id="modelSearch" placeholder="🔎 Buscar modelo..." />
+          <div class="cat-filters" id="catFilters"></div>
         </div>
-        <div class="score-bar"><div class="score-fill" id="scoreFill"></div></div>
-        <ul class="tips" id="tips"></ul>
       </div>
+      <div class="models-grid" id="modelsGrid"></div>
+    </section>
 
-      <div class="card preview-card">
-        <div class="preview-head">
-          <h2>Preview do prompt</h2>
-          <div class="preview-actions">
-            <button id="copyBtn" class="primary">Copiar</button>
-          </div>
-        </div>
-        <pre class="preview" id="preview" aria-live="polite"></pre>
+    <!-- ============ ABA: TÉCNICAS ============ -->
+    <section class="tab-panel" id="tab-tecnicas">
+      <div class="panel-intro">
+        <h2>🎓 Técnicas de Prompt Engineering</h2>
+        <p>As metodologias por trás de um bom prompt. Domine estas e você melhora qualquer resultado de IA.</p>
       </div>
-
-      <div class="card templates-card">
-        <h2>Meus templates</h2>
-        <div class="template-save">
-          <input type="text" id="templateName" placeholder="Nome do template" />
-          <button id="saveBtn" class="primary">Salvar</button>
-        </div>
-        <ul class="template-list" id="templateList"></ul>
-        <div class="template-io">
-          <button id="exportBtn" class="ghost">Exportar JSON</button>
-          <button id="importBtn" class="ghost">Importar JSON</button>
-          <input type="file" id="importFile" accept="application/json" hidden />
-        </div>
-      </div>
-    </aside>
+      <div class="tech-grid" id="techGrid"></div>
+    </section>
   </main>
+
+  <footer class="footer">
+    <p>✦ Construtor de Prompts de Excelência — ferramenta gratuita e open source.</p>
+    <p class="footer-sub">Feito para ajudar quem usa IA todo dia. Compartilhe à vontade. 💙</p>
+  </footer>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 

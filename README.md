@@ -1,22 +1,33 @@
 # Construtor de Prompts de Excelência
 
-App web local (sem instalação) para construir prompts de alta qualidade de forma
-consistente, montando-os a partir de blocos baseados em metodologias comprovadas.
-Focado em **programação** e **análise/dados**, mas serve para qualquer caso.
+Ferramenta web gratuita (sem instalação) para criar prompts de IA de alta qualidade.
+Combina três coisas: um **construtor por blocos**, uma **biblioteca de modelos prontos**
+e um **guia de técnicas** de prompt engineering. Serve para qualquer caso de uso.
+
+🔗 **Use online:** https://flagorcry.github.io/construtor-de-prompts/
+
+## As 3 abas
+
+- **🔧 Construtor** — monte o prompt bloco a bloco, com preview ao vivo, medidor de
+  qualidade e biblioteca pessoal de templates.
+- **📚 Modelos** — mais de 20 prompts prontos e testados em 8 categorias (escrita,
+  LinkedIn, marketing, código, dados, carreira, ensino, produtividade). Use no
+  construtor para editar, ou copie direto.
+- **🎓 Técnicas** — cards didáticos com as metodologias por trás de um bom prompt
+  (papel, few-shot, chain-of-thought, delimitadores, restrições e mais).
 
 ## Como usar
 
-1. Dê **duplo-clique em `index.html`** (abre no seu navegador padrão). Funciona offline.
-2. Preencha os blocos na coluna da esquerda. O **preview** à direita monta o prompt em tempo real.
+1. Acesse o link acima **ou** dê duplo-clique em `index.html` (funciona offline).
+2. Comece por um **modelo** ou monte do zero no **construtor**.
 3. Clique em **Copiar** e cole na sua IA (Claude, ChatGPT, etc.).
 
-## Recursos
+## Recursos do construtor
 
 - **Blocos por metodologia**: Papel/Persona, Contexto, Tarefa, Formato de saída,
   Exemplos (few-shot), Raciocínio (passo a passo) e Restrições/Critérios de qualidade.
   Cada bloco pode ser ligado/desligado no toggle.
-- **Presets**: botões **💻 Programação** e **📊 Análise/Dados** pré-preenchem os blocos
-  com bons pontos de partida. **Limpar tudo** reseta.
+- **Presets** de início rápido: 💻 Programação, 📊 Análise/Dados e ✍️ Escrita.
 - **Medidor de qualidade**: nota de 0 a 100 com dicas acionáveis sobre o que falta.
 - **Biblioteca de templates**: salve configurações com nome, carregue, exclua.
   Os dados ficam no `localStorage` do navegador.

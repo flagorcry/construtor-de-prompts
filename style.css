@@ -47,8 +47,28 @@ body {
   color: transparent;
 }
 .topbar h1 { font-size: 18px; margin: 0; font-weight: 600; }
-.presets { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .presets-label { color: var(--text-dim); font-size: 13px; }
+
+/* ---------- Tabs ---------- */
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+.tab-btn {
+  background: transparent; border: 1px solid transparent; color: var(--text-dim);
+  font-size: 14px; padding: 8px 16px; border-radius: 999px;
+}
+.tab-btn:hover { color: var(--text); border-color: var(--border); }
+.tab-btn.active {
+  color: #fff; border-color: transparent;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+}
+.tab-panel { display: none; }
+.tab-panel.active { display: block; animation: fade .25s ease; }
+@keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* ---------- Builder toolbar ---------- */
+.builder-toolbar {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  max-width: 1400px; margin: 0 auto; padding: 16px 24px 0;
+}
 
 /* ---------- Layout ---------- */
 .layout {
@@ -188,6 +208,55 @@ button.primary { background: linear-gradient(135deg, var(--accent), var(--accent
 button.primary:hover { filter: brightness(1.08); }
 button.ghost { background: transparent; color: var(--text-dim); }
 .preset-btn { font-size: 13px; }
+
+/* ---------- Painéis Modelos / Técnicas ---------- */
+.panel-intro { max-width: 1400px; margin: 0 auto; padding: 24px 24px 0; }
+.panel-intro h2 { font-size: 22px; margin: 0 0 6px; }
+.panel-intro p { color: var(--text-dim); margin: 0 0 16px; max-width: 760px; }
+
+.models-controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+#modelSearch { min-width: 240px; flex: 0 0 auto; }
+.cat-filters { display: flex; gap: 6px; flex-wrap: wrap; }
+.cat-chip {
+  font-size: 13px; padding: 6px 12px; border-radius: 999px;
+  background: var(--bg-soft); border: 1px solid var(--border); color: var(--text-dim);
+  cursor: pointer;
+}
+.cat-chip:hover { color: var(--text); border-color: var(--accent); }
+.cat-chip.active { background: var(--accent); border-color: transparent; color: #fff; }
+
+.models-grid, .tech-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px; max-width: 1400px; margin: 0 auto; padding: 16px 24px 24px;
+}
+
+.model-card, .tech-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 18px; display: flex; flex-direction: column;
+  transition: border-color .2s, transform .1s;
+}
+.model-card:hover, .tech-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.model-card .m-cat {
+  align-self: flex-start; font-size: 11px; text-transform: uppercase; letter-spacing: .04em;
+  color: var(--accent); background: rgba(110,142,251,.12); padding: 3px 8px; border-radius: 6px; margin-bottom: 10px;
+}
+.model-card h3, .tech-card h3 { font-size: 16px; margin: 0 0 8px; display: flex; align-items: center; gap: 8px; }
+.model-card p, .tech-card p { color: var(--text-dim); font-size: 14px; margin: 0 0 14px; flex: 1; }
+.tech-card .tech-eg {
+  background: var(--bg); border: 1px solid var(--border); border-left: 3px solid var(--accent-2);
+  border-radius: 6px; padding: 8px 10px; font-size: 13px; color: var(--text); margin-top: auto;
+}
+.tech-card .tech-eg strong { color: var(--accent-2); }
+.model-actions { display: flex; gap: 8px; margin-top: auto; }
+.model-actions button { flex: 1; }
+
+/* ---------- Footer ---------- */
+.footer {
+  text-align: center; padding: 28px 24px; border-top: 1px solid var(--border);
+  margin-top: 16px; color: var(--text-dim);
+}
+.footer p { margin: 4px 0; }
+.footer-sub { font-size: 13px; }
 
 /* Toast */
 .toast {
